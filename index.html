@@ -15,10 +15,10 @@
             btn.innerText = "стоп";
             start = setInterval(() => {
                 number = ~~(10000000000 * Math.random()) + 70000000000;
-
-                phone.innerText = (number + "").replace(/\d(\d{3})(\d{3})(\d{4})/,
+                text = (number + "").replace(/\d(\d{3})(\d{3})(\d{4})/,
                     "+7 ($1) $2-$3");
             }, 100);
+            phone.innerText = text
             return
         }
         btn.innerText = "старт";
