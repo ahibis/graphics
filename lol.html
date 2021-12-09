@@ -1,0 +1,22 @@
+<div id="phone"></div>
+<button id="btn" onclick="lol()">старт</button>
+<script>
+    start = 0;
+    phone = document.querySelector("#phone")
+    btn = document.querySelector("#btn")
+
+    function lol() {
+        if (!start) {
+            start = setInterval(() => {
+                btn.innerText = "стоп";
+                number = ~~(10000000000 * Math.random()) + 70000000000;
+                phone.innerText = (number + "").replace(/(\d)(\d{3})(\d{3})(\d{4})/,
+                    "+7 ($2) $3-$4");
+            }, 100);
+            return
+        }
+        btn.innerText = "старт";
+        clearInterval(start)
+        start = 0;
+    }
+</script>
