@@ -6,8 +6,10 @@
     btn = document.querySelector("#btn")
     text = "";
     phone.addEventListener('DOMCharacterDataModified', function () {
-        if (!start)
+        if (!start) {
             this.innerText = text;
+            alert("бан")
+        }
     });
 
     function lol() {
