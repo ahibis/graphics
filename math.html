@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<select v-model="type">
+			<option v-for="type,i in types" :value="i">{{type}}</option>	
+		</select>
+		<div v-if="type==0">
+			<div>шанс правильного ответа<input type="number" v-model="chance"></div>
+			<div>кол-во ответов<input type="number" v-model="count"></div>
+		</div>
+		<div v-if="type==1">
+			<div>кол-во правильных<input type="number" v-model="t"></div>
+			<div>кол-во всего<input type="number" v-model="all"></div>
+			<div>кол-во попыток<input type="number" v-model="count"></div>
+		</div>
+		<button @click="solve">рассчитать</button>
+		<h3>Ряд распределения</h3>
+		<div v-for="c,i in rvar">{{i}}:{{c}}</div>
+		<div>mx={{mx}}</div>
+		<div>mx2={{mx2}}</div>
+		<div>dx={{dx}}</div>
+	</div>
+	<script>
+		F={0:1};
+		function fact(x){
+			if(F[x]) return F[x];
+			return F[x]=fact(x-1)*x;
+		}
+		function C(n,k){
+			return fact(n)/(fact(k)*fact(n-k))
+		}
+		let vm=new Vue({
+			el:"#app",
+			data:{
+				chance:0,
+				count:0,
+				rvar:[],
+				mx:0,
+				mx2:0,
+				dx:0,
+				types:["с повторениями","без повторений","не прервыная"],
+				type:0,
+				t:0,
+				all:0
+			},
+			methods:{
+				solve:function(){
+					this.rvar=[]
+					this.mx=0;
+					this.mx2=0;
+					if(this.type==0){
+						for(let i=0;i<=this.count;i++){
+							let c=C(this.count,i);
+							let sv=c*(this.chance**i)*((1-this.chance)**(this.count-i));
+							this.mx=this.mx+sv*i;
+							this.mx2=this.mx2+sv*i*i;
+							this.rvar.push(sv);
+						}
+						this.dx=(this.mx2-this.mx*this.mx);
+						return;
+					}
+					if(this.type==1){
+						for(let i=0;i<=this.count;i++){
+							let c=C(this.t,i)*C(this.all-this.t,this.count-i)/C(this.all,this.count);
+							this.mx=this.mx+c*i;
+							this.mx2=this.mx2+c*i*i;
+							this.rvar.push(c);
+						}
+						this.dx=(this.mx2-this.mx*this.mx);
+						return;
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>
