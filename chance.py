@@ -16,11 +16,11 @@ def f():
     return scores
 scores=0
 victories=0
-print("очки за каждый раунд")
+print("points of all rounds")
 for i in range(200):
     s=f()
     print(s,sep=" ",end=" ")
     if s>=0:
         victories+=1
     scores+=s
-print(f"\n общее число очков {scores} побед {victories}/200")
+print(f"\n all scores {scores} for {victories}/200 vicroties")

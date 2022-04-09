@@ -1,13 +1,12 @@
 from numpy import *
-v=random.randint(1,100,60).reshape(20,3)
-M=10000
+v=random.randint(1,100,60).reshape(20,3) # list of subjects
+M=10000 # max mass of backpack
 Max=0;
 ans=[]
 mas=0
 mass=set()
 v=[*v]
 v.sort(key=lambda el:el[1]/el[0],reverse=True);
-print(v)
 def f(i,tm,s,a):
     global Max,ans,mas,mass
     a=a.copy()
@@ -31,7 +30,7 @@ def f(i,tm,s,a):
         F=f(k,tm,s,a)
         flag = flag or F
     if flag == False:
-        print(a,i,tm,s);
+        # print(a,i,tm,s); intermediate steps
         if s>Max:
             Max=s
             ans=a.copy()
